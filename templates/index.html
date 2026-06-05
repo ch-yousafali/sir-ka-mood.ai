@@ -3,602 +3,661 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sir Kamood - Sir Ne Marks Kaise Diye?</title>
+    <title>Sir Kamood — Marks Investigation Bureau</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #000000;
-            --bg-secondary: #0a0a0a;
-            --bg-card: rgba(28, 28, 30, 0.6);
-            --bg-card-solid: #1c1c1e;
-            --border: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(255, 255, 255, 0.15);
-            --text-primary: #f5f5f7;
-            --text-secondary: #86868b;
-            --text-tertiary: #636366;
-            --accent-red: #ff3b30;
-            --accent-red-hover: #ff453a;
-            --accent-red-glow: rgba(255, 59, 48, 0.3);
-            --success: #30d158;
-            --glass: rgba(255, 255, 255, 0.03);
+            --bg:          #0b0f1a;
+            --bg-2:        #0f1525;
+            --bg-card:     rgba(18, 25, 45, 0.7);
+            --bg-card-s:   #121d32;
+            --border:      rgba(255, 255, 255, 0.07);
+            --border-h:    rgba(255, 213, 79, 0.25);
+            --text-1:      #eef2ff;
+            --text-2:      #8899bb;
+            --text-3:      #4d607a;
+            --gold:        #ffd54f;
+            --gold-d:      #ffb300;
+            --gold-glow:   rgba(255, 213, 79, 0.18);
+            --gold-glow-s: rgba(255, 213, 79, 0.08);
+            --teal:        #4dd0e1;
+            --green:       #69f0ae;
+            --orange:      #ff8f00;
+            --glass:       rgba(255, 255, 255, 0.025);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.5;
+            font-family: 'Sora', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text-1);
+            line-height: 1.6;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-primary); }
-        ::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 4px; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: rgba(255,213,79,0.2); border-radius: 3px; }
 
-        .bg-mesh {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1;
-            background: 
-                radial-gradient(ellipse at 20% 20%, rgba(255, 59, 48, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(255, 59, 48, 0.05) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(120, 120, 128, 0.03) 0%, transparent 70%);
-            pointer-events: none;
+        ::selection { background: rgba(255,213,79,0.25); color: #fff; }
+
+        /* ── Background ── */
+        .bg-layer {
+            position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background:
+                radial-gradient(ellipse 80% 50% at 15% 15%, rgba(255,213,79,0.055) 0%, transparent 55%),
+                radial-gradient(ellipse 60% 40% at 85% 85%, rgba(77,208,225,0.04) 0%, transparent 50%),
+                radial-gradient(ellipse 40% 60% at 50% 50%, rgba(10,18,38,0.8) 0%, transparent 100%);
         }
 
-        .noise {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            pointer-events: none;
+        .grid-overlay {
+            position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
         }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
+        /* ── Layout ── */
+        .wrap { max-width: 780px; margin: 0 auto; padding: 0 22px; }
 
+        /* ── Header ── */
         .header {
             text-align: center;
-            padding: 80px 0 40px;
-            position: relative;
+            padding: 76px 0 44px;
         }
 
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
+        .top-badge {
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: 7px 16px;
             background: var(--glass);
-            border: 1px solid var(--border);
+            border: 1px solid rgba(255,213,79,0.2);
             border-radius: 100px;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--accent-red);
-            margin-bottom: 24px;
+            font-size: 12px; font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 0.06em; text-transform: uppercase;
+            margin-bottom: 26px;
             backdrop-filter: blur(20px);
         }
 
         .badge-dot {
             width: 6px; height: 6px;
-            background: var(--accent-red);
+            background: var(--gold);
             border-radius: 50%;
-            animation: pulse 2s infinite;
+            animation: pulse-dot 2s infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
+        @keyframes pulse-dot {
+            0%,100% { opacity: 1; transform: scale(1); }
+            50%      { opacity: 0.4; transform: scale(0.8); }
         }
 
-        .title {
-            font-size: clamp(36px, 8vw, 56px);
+        .site-title {
+            font-size: clamp(40px, 9vw, 64px);
             font-weight: 800;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-            margin-bottom: 16px;
-            background: linear-gradient(180deg, #ffffff 0%, #86868b 100%);
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+            margin-bottom: 14px;
+            background: linear-gradient(165deg, #ffffff 0%, #ffd54f 55%, #ffb300 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .subtitle {
-            font-size: 18px;
-            color: var(--text-secondary);
+        .site-sub {
+            font-size: 16px;
+            color: var(--text-2);
             font-weight: 400;
-            max-width: 500px;
+            max-width: 460px;
             margin: 0 auto;
+            line-height: 1.65;
         }
 
-        .news-banner {
-            background: linear-gradient(90deg, rgba(255, 59, 48, 0.1), rgba(255, 59, 48, 0.05));
-            border: 1px solid rgba(255, 59, 48, 0.2);
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin: 32px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 14px;
-            color: var(--text-primary);
-            backdrop-filter: blur(10px);
+        /* ── Heartbreaking News Banner ── */
+        .hbn-wrap {
+            margin: 28px 0 36px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(255,143,0,0.25);
+            background: linear-gradient(135deg, rgba(255,143,0,0.07) 0%, rgba(255,213,79,0.03) 100%);
+            backdrop-filter: blur(16px);
         }
 
-        .news-icon {
-            width: 32px; height: 32px;
-            background: rgba(255, 59, 48, 0.15);
-            border-radius: 8px;
+        .hbn-label {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 18px;
+            background: linear-gradient(90deg, rgba(255,143,0,0.18), rgba(255,143,0,0.08));
+            border-bottom: 1px solid rgba(255,143,0,0.15);
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--orange);
+        }
+
+        .hbn-label-dot {
+            width: 7px; height: 7px;
+            background: var(--orange);
+            border-radius: 50%;
+            animation: pulse-dot 1.5s infinite;
+            box-shadow: 0 0 6px var(--orange);
+        }
+
+        .hbn-scroll-wrapper {
+            overflow: hidden;
+            padding: 13px 0;
+        }
+
+        .hbn-track {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            white-space: nowrap;
+            animation: ticker 38s linear infinite;
+            font-size: 13.5px;
+            color: var(--text-1);
+            font-weight: 500;
+        }
+
+        .hbn-track:hover { animation-play-state: paused; }
+
+        .hbn-item {
+            padding: 0 40px;
             flex-shrink: 0;
-            font-weight: 700;
-            color: var(--accent-red);
         }
 
-        .news-text { line-height: 1.4; }
-        .news-text strong { color: var(--accent-red); font-weight: 600; }
+        .hbn-item .sep {
+            color: var(--gold);
+            margin: 0 10px;
+            opacity: 0.6;
+        }
 
+        @keyframes ticker {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ── Card ── */
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 20px;
             padding: 32px;
-            margin-bottom: 24px;
+            margin-bottom: 22px;
             backdrop-filter: blur(40px);
-            transition: border-color 0.3s ease, transform 0.3s ease;
+            transition: border-color 0.3s ease;
         }
 
-        .card:hover { border-color: var(--border-hover); }
+        .card:hover { border-color: var(--border-h); }
+
+        .card-header { margin-bottom: 6px; }
 
         .card-title {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
-            margin-bottom: 8px;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.025em;
+            color: var(--text-1);
         }
 
         .card-desc {
-            color: var(--text-secondary);
-            font-size: 15px;
-            margin-bottom: 24px;
+            color: var(--text-2);
+            font-size: 14px;
+            margin-bottom: 26px;
+            margin-top: 6px;
+            line-height: 1.6;
         }
 
-        .form-group { margin-bottom: 20px; }
+        /* ── Form ── */
+        .form-group { margin-bottom: 18px; }
 
         .form-label {
             display: block;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-primary);
-            margin-bottom: 8px;
+            font-size: 13px; font-weight: 600;
+            color: var(--text-2);
+            margin-bottom: 7px;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
         }
-
-        .form-label span { color: var(--text-tertiary); font-weight: 400; }
 
         .form-input {
             width: 100%;
-            padding: 14px 16px;
-            background: rgba(255, 255, 255, 0.03);
+            padding: 13px 15px;
+            background: rgba(255,255,255,0.025);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 15px;
+            border-radius: 11px;
+            color: var(--text-1);
+            font-size: 14px;
             font-family: inherit;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
             outline: none;
         }
 
         .form-input:focus {
-            border-color: var(--accent-red);
-            background: rgba(255, 59, 48, 0.03);
-            box-shadow: 0 0 0 3px var(--accent-red-glow);
+            border-color: rgba(255,213,79,0.4);
+            background: rgba(255,213,79,0.03);
+            box-shadow: 0 0 0 3px rgba(255,213,79,0.08);
         }
 
-        .form-input::placeholder { color: var(--text-tertiary); }
+        .form-input::placeholder { color: var(--text-3); }
 
-        textarea.form-input { resize: vertical; min-height: 100px; }
+        textarea.form-input { resize: vertical; min-height: 90px; }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
+            gap: 14px;
         }
 
-        @media (max-width: 640px) {
-            .form-row { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 580px) { .form-row { grid-template-columns: 1fr; } }
 
+        /* ── Buttons ── */
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 14px 28px;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 600;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 12px 24px;
+            border-radius: 11px;
+            font-size: 14px; font-weight: 600;
             font-family: inherit;
             cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            outline: none;
+            transition: all 0.25s ease;
+            border: none; outline: none;
         }
 
         .btn-primary {
-            background: var(--accent-red);
-            color: white;
-            box-shadow: 0 4px 20px rgba(255, 59, 48, 0.3);
+            background: linear-gradient(135deg, var(--gold-d), var(--gold));
+            color: #0b0f1a;
+            box-shadow: 0 4px 18px rgba(255,179,0,0.3);
         }
 
         .btn-primary:hover {
-            background: var(--accent-red-hover);
             transform: translateY(-1px);
-            box-shadow: 0 8px 30px rgba(255, 59, 48, 0.4);
+            box-shadow: 0 8px 28px rgba(255,179,0,0.4);
         }
 
         .btn-primary:active { transform: translateY(0); }
 
         .btn-secondary {
             background: var(--glass);
-            color: var(--text-primary);
+            color: var(--text-2);
             border: 1px solid var(--border);
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: var(--border-hover);
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,213,79,0.2);
+            color: var(--text-1);
         }
 
-        .btn-group { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn-teal {
+            background: rgba(77,208,225,0.1);
+            color: var(--teal);
+            border: 1px solid rgba(77,208,225,0.25);
+        }
 
+        .btn-teal:hover {
+            background: rgba(77,208,225,0.18);
+            box-shadow: 0 0 14px rgba(77,208,225,0.15);
+        }
+
+        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
+
+        /* ── Loading ── */
         .loading {
-            display: none;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 40px;
-            color: var(--text-secondary);
+            display: none; align-items: center; justify-content: center; gap: 12px;
+            padding: 36px;
+            color: var(--text-2);
+            font-size: 14px;
         }
 
         .loading.active { display: flex; }
 
         .spinner {
-            width: 20px; height: 20px;
+            width: 18px; height: 18px;
             border: 2px solid var(--border);
-            border-top-color: var(--accent-red);
+            border-top-color: var(--gold);
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            animation: spin 0.75s linear infinite;
+            flex-shrink: 0;
         }
 
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        .result-container {
-            display: none;
-            margin-top: 32px;
-            animation: fadeInUp 0.6s ease;
+        /* ── Result ── */
+        .result-box {
+            display: none; margin-top: 28px;
+            animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        .result-container.active { display: block; }
+        .result-box.active { display: block; }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
-        .result-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 12px;
+        .result-meta {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 10px;
+            margin-bottom: 16px;
         }
 
-        .result-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
+        .status-pill {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 5px 14px;
             border-radius: 100px;
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 12px; font-weight: 700;
+            letter-spacing: 0.04em;
         }
 
-        .badge-pass {
-            background: rgba(48, 209, 88, 0.15);
-            color: var(--success);
-            border: 1px solid rgba(48, 209, 88, 0.3);
+        .pill-pass {
+            background: rgba(105,240,174,0.12);
+            color: var(--green);
+            border: 1px solid rgba(105,240,174,0.25);
         }
 
-        .badge-fail {
-            background: rgba(255, 59, 48, 0.15);
-            color: var(--accent-red);
-            border: 1px solid rgba(255, 59, 48, 0.3);
+        .pill-fail {
+            background: rgba(255,143,0,0.12);
+            color: var(--orange);
+            border: 1px solid rgba(255,143,0,0.25);
         }
 
         .result-content {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255,255,255,0.018);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 24px;
-            font-size: 15px;
-            line-height: 1.7;
-            color: var(--text-primary);
+            border-radius: 14px;
+            padding: 22px;
+            font-size: 14.5px;
+            line-height: 1.78;
+            color: var(--text-1);
             white-space: pre-wrap;
+            font-family: 'Sora', sans-serif;
         }
 
-        .result-content h1, .result-content h2, .result-content h3 {
-            color: var(--accent-red);
-            margin: 20px 0 12px;
-            font-size: 18px;
-            font-weight: 700;
-        }
+        .result-content strong { color: var(--gold); }
 
-        .result-content strong { color: var(--accent-red); }
-        .result-content p { margin-bottom: 12px; }
-
-        .typewriter-cursor {
+        .cursor-blink {
             display: inline-block;
-            width: 2px;
-            height: 1.2em;
-            background: var(--accent-red);
+            width: 2px; height: 1.1em;
+            background: var(--gold);
             margin-left: 2px;
-            animation: blink 1s infinite;
+            animation: blink 0.9s infinite;
             vertical-align: text-bottom;
         }
 
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+        .action-row { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+
+        /* ── Sad face ── */
+        .sad-container {
+            display: none; text-align: center; padding: 36px 20px;
+            animation: rise 0.5s ease;
         }
 
-        .action-bar {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-            flex-wrap: wrap;
+        .sad-container.active { display: block; }
+
+        .sad-ring {
+            width: 100px; height: 100px;
+            margin: 0 auto 18px;
         }
 
+        .sad-ring svg { width: 100%; height: 100%; }
+
+        .sad-title { font-size: 17px; font-weight: 600; color: var(--text-2); margin-bottom: 5px; }
+        .sad-hint  { font-size: 13px; color: var(--text-3); }
+
+        /* ── Appeal tease ── */
         .appeal-tease {
-            background: linear-gradient(135deg, rgba(255, 59, 48, 0.08), rgba(255, 59, 48, 0.02));
-            border: 1px solid rgba(255, 59, 48, 0.2);
-            border-radius: 16px;
-            padding: 24px;
-            margin: 24px 0;
+            background: linear-gradient(135deg, rgba(255,213,79,0.06), rgba(255,213,79,0.02));
+            border: 1px solid rgba(255,213,79,0.15);
+            border-radius: 14px;
+            padding: 22px;
             text-align: center;
         }
 
-        .appeal-tease-text {
-            font-size: 16px;
-            color: var(--text-primary);
-            margin-bottom: 16px;
-            line-height: 1.6;
+        .appeal-tease p {
+            font-size: 15px; color: var(--text-1); line-height: 1.7;
+            margin-bottom: 18px;
         }
 
-        .appeal-tease-text .highlight {
-            color: var(--accent-red);
-            font-weight: 600;
-        }
+        .appeal-tease .hl { color: var(--gold); font-weight: 600; }
 
-        .email-box {
-            background: #0f0f0f;
+        /* ── Email box ── */
+        .email-shell {
+            background: #080e1b;
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 0;
+            border-radius: 14px;
             overflow: hidden;
         }
 
-        .email-header {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 16px 24px;
+        .email-chrome {
+            padding: 13px 18px;
+            background: rgba(255,255,255,0.025);
             border-bottom: 1px solid var(--border);
-            font-size: 13px;
-            color: var(--text-secondary);
-            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-3);
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        .email-chrome-dot {
+            width: 9px; height: 9px;
+            border-radius: 50%;
+            background: rgba(255,213,79,0.3);
+            flex-shrink: 0;
         }
 
         .email-body {
-            padding: 24px;
-            font-size: 15px;
-            line-height: 1.8;
-            color: var(--text-primary);
+            padding: 22px;
+            font-size: 14px; line-height: 1.85;
+            color: var(--text-1);
             white-space: pre-wrap;
-            font-family: inherit;
         }
 
-        .subject-line {
-            background: rgba(255, 59, 48, 0.1);
-            border-left: 3px solid var(--accent-red);
-            padding: 12px 16px;
-            margin-bottom: 20px;
+        .subj-line {
+            background: rgba(255,213,79,0.07);
+            border-left: 3px solid var(--gold);
+            padding: 10px 14px;
+            margin-bottom: 18px;
             border-radius: 0 8px 8px 0;
             font-weight: 600;
-            color: var(--accent-red);
+            color: var(--gold);
+            font-size: 13.5px;
         }
 
-        #confetti-canvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 100;
-        }
-
-        .sad-face-container {
-            display: none;
-            text-align: center;
-            padding: 40px;
-            animation: fadeInUp 0.6s ease;
-        }
-
-        .sad-face-container.active { display: block; }
-
-        .sad-face {
-            width: 120px; height: 120px;
-            margin: 0 auto 20px;
-            position: relative;
-        }
-
-        .sad-face svg { width: 100%; height: 100%; }
-
-        .sad-text {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-        }
-
-        .sad-subtext {
-            font-size: 15px;
-            color: var(--text-tertiary);
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 32px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: var(--bg-card-solid);
-            border: 1px solid var(--border);
-            color: var(--text-primary);
-            padding: 14px 24px;
+        /* ── Student info panel ── */
+        .student-panel {
+            background: rgba(255,213,79,0.04);
+            border: 1px solid rgba(255,213,79,0.12);
             border-radius: 12px;
-            font-size: 14px;
-            font-weight: 500;
-            z-index: 1000;
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-
-        .share-box {
-            display: none;
-            margin-top: 16px;
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            border-radius: 10px;
+            padding: 15px 18px;
+            margin-bottom: 18px;
             font-size: 13px;
-            color: var(--text-secondary);
+        }
+
+        .student-panel .row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 4px 0;
+        }
+
+        .student-panel .row:not(:last-child) {
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 8px; margin-bottom: 8px;
+        }
+
+        .s-label { color: var(--text-2); font-weight: 500; }
+        .s-value { color: var(--text-1); font-weight: 600; }
+
+        .dept-chip {
+            display: inline-block;
+            background: rgba(255,213,79,0.12);
+            color: var(--gold);
+            padding: 3px 10px; border-radius: 6px;
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 0.06em;
+        }
+
+        /* ── Contacts Section ── */
+        .contacts-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+            margin-top: 22px;
+        }
+
+        @media (max-width: 580px) { .contacts-grid { grid-template-columns: 1fr; } }
+
+        .contact-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 18px;
+            transition: all 0.25s ease;
+        }
+
+        .contact-card:hover {
+            border-color: rgba(255,213,79,0.2);
+            background: rgba(255,213,79,0.02);
+        }
+
+        .contact-role {
+            font-size: 10px; font-weight: 700;
+            letter-spacing: 0.09em; text-transform: uppercase;
+            color: var(--gold); opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .contact-name {
+            font-size: 14px; font-weight: 600;
+            color: var(--text-1);
+            margin-bottom: 3px;
+        }
+
+        .contact-email {
+            font-size: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--teal);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .contact-email:hover { color: var(--gold); text-decoration: underline; }
+
+        /* ── Toast ── */
+        .toast {
+            position: fixed; bottom: 28px; left: 50%;
+            transform: translateX(-50%) translateY(90px);
+            background: var(--bg-card-s);
+            border: 1px solid rgba(255,213,79,0.2);
+            color: var(--text-1);
+            padding: 12px 22px;
+            border-radius: 11px;
+            font-size: 13px; font-weight: 500;
+            z-index: 1000; opacity: 0;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+            white-space: nowrap;
+        }
+
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        /* ── Share box ── */
+        .share-box {
+            display: none; margin-top: 14px;
+            padding: 11px 14px;
+            background: rgba(255,255,255,0.025);
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            font-size: 12px; color: var(--text-2);
+            font-family: 'JetBrains Mono', monospace;
             word-break: break-all;
         }
 
         .share-box.active { display: block; }
 
+        /* ── Divider ── */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,213,79,0.15), transparent);
+            margin: 28px 0;
+        }
+
+        /* ── Footer ── */
         .footer {
             text-align: center;
-            padding: 60px 0 40px;
-            color: var(--text-tertiary);
-            font-size: 13px;
+            padding: 52px 0 40px;
+            color: var(--text-3);
+            font-size: 12.5px;
+            line-height: 1.8;
         }
 
-        .footer a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s;
+        .footer a { color: var(--text-2); text-decoration: none; }
+        .footer a:hover { color: var(--gold); }
+
+        /* ── Canvas ── */
+        #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 99; }
+
+        /* ── Mobile tweaks ── */
+        @media (max-width: 580px) {
+            .header     { padding: 52px 0 30px; }
+            .card       { padding: 22px 18px; border-radius: 16px; }
+            .btn        { width: 100%; }
+            .btn-group  { flex-direction: column; }
+            .action-row { flex-direction: column; }
         }
 
-        .footer a:hover { color: var(--accent-red); }
-
-        @media (max-width: 640px) {
-            .header { padding: 60px 0 30px; }
-            .card { padding: 24px; border-radius: 16px; }
-            .btn-group { width: 100%; }
-            .btn { width: 100%; }
-        }
-
-        html { scroll-behavior: smooth; }
-
-        ::selection {
-            background: rgba(255, 59, 48, 0.3);
-            color: white;
-        }
-
-        .student-info-display {
-            background: rgba(255, 59, 48, 0.05);
-            border: 1px solid rgba(255, 59, 48, 0.15);
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .student-info-display .info-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-
-        .student-info-display .info-row:last-child { margin-bottom: 0; }
-
-        .student-info-display .info-label {
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .student-info-display .info-value {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .department-badge {
-            display: inline-block;
-            background: rgba(255, 59, 48, 0.15);
-            color: var(--accent-red);
+        /* ── Section label ── */
+        .section-tag {
+            display: inline-flex; align-items: center; gap: 6px;
             padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            margin-top: 4px;
+            background: rgba(255,213,79,0.07);
+            border: 1px solid rgba(255,213,79,0.15);
+            border-radius: 100px;
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 0.07em; text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 14px;
         }
     </style>
 </head>
 <body>
-    <div class="bg-mesh"></div>
-    <div class="noise"></div>
-    <canvas id="confetti-canvas"></canvas>
+    <div class="bg-layer"></div>
+    <div class="grid-overlay"></div>
+    <canvas id="confetti"></canvas>
 
-    <div class="container">
+    <div class="wrap">
+        <!-- ── HEADER ── -->
         <header class="header">
-            <div class="badge">
+            <div class="top-badge">
                 <span class="badge-dot"></span>
                 Marks Investigation Bureau
             </div>
-            <h1 class="title">Sir Kamood</h1>
-            <p class="subtitle">Sir Ne Marks Kaise Diye? The official conspiracy theory generator for desi students.</p>
+            <h1 class="site-title">Sir Kamood</h1>
+            <p class="site-sub">Sir Ne Marks Kaise Diye? The official conspiracy theory generator for CHEP students surviving Differential Equations.</p>
         </header>
 
-        <div class="news-banner">
-            <div class="news-icon">!</div>
-            <div class="news-text">
-                <strong>Breaking News:</strong> Differential Paper results are out. 50% of students have discovered that "differential" actually means the difference between their marks and the passing marks. 
+        <!-- ── HEARTBREAKING NEWS BANNER ── -->
+        <div class="hbn-wrap">
+            <div class="hbn-label">
+                <span class="hbn-label-dot"></span>
+                Heartbreaking News
+            </div>
+            <div class="hbn-scroll-wrapper">
+                <div class="hbn-track" id="hbn-track">
+                    <!-- Duplicated for seamless loop -->
+                    <span class="hbn-item">Differential Equations paper results out <span class="sep">•</span> 70% students discovered "differential" means difference between their marks and passing marks <span class="sep">•</span> Sir reportedly checked 13 papers in his sleep last Tuesday <span class="sep">•</span> CHEP canteen biryani confirmed to influence 34% of marking decisions <span class="sep">•</span> Solar flare on result day: coincidence? We think not <span class="sep">•</span> WhatsApp family group cited as primary cause of 40-60 mark range <span class="sep">•</span> University sources deny "dream marking" allegations — unofficially confirmed <span class="sep">•</span> Appeal letter success rate: 2.7% — but hope is free <span class="sep">⚡</span></span>
+                    <span class="hbn-item">Differential Equations paper results out <span class="sep">•</span> 70% students discovered "differential" means difference between their marks and passing marks <span class="sep">•</span> Sir reportedly checked 13 papers in his sleep last Tuesday <span class="sep">•</span> CHEP canteen biryani confirmed to influence 34% of marking decisions <span class="sep">•</span> Solar flare on result day: coincidence? We think not <span class="sep">•</span> WhatsApp family group cited as primary cause of 40-60 mark range <span class="sep">•</span> University sources deny "dream marking" allegations — unofficially confirmed <span class="sep">•</span> Appeal letter success rate: 2.7% — but hope is free <span class="sep">⚡</span></span>
+                </div>
             </div>
         </div>
 
-        <!-- Conspiracy Analyzer -->
+        <!-- ── CONSPIRACY ANALYZER ── -->
         <div class="card" id="conspiracy-section">
+            <div class="section-tag">Step 1</div>
             <h2 class="card-title">Conspiracy Analyzer</h2>
-            <p class="card-desc">Enter your marks. Our AI will generate ONE personalized conspiracy theory based on your score bad marks = Sir's life problems, good marks = Sir was in heaven.</p>
-            
+            <p class="card-desc">Enter your marks. The bureau will generate one personalized, evidence-free theory explaining exactly why Sir gave you those specific numbers.</p>
+
             <form id="conspiracy-form">
                 <div class="form-row">
                     <div class="form-group">
@@ -607,64 +666,65 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Marks Obtained</label>
-                        <input type="number" class="form-input" id="marks-obtained" placeholder="0-100" min="0" max="100" required>
+                        <input type="number" class="form-input" id="marks-obtained" placeholder="0 – 100" min="0" max="100" required>
                     </div>
                 </div>
-                
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Marks Expected</label>
                         <input type="number" class="form-input" id="marks-expected" placeholder="What you deserved" min="0" max="100" required>
                     </div>
+                    <div class="form-group">
+                        <label class="form-label">Your Name / Roll No <span style="font-weight:400;text-transform:none;font-size:11px;color:var(--text-3)">(optional — for personalised roast)</span></label>
+                        <input type="text" class="form-input" id="student-lookup" placeholder="e.g. Yousaf Ali or 1123BE">
+                    </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">
-                    Generate Conspiracy Theories
+                <button type="submit" class="btn btn-primary" style="width:100%;margin-top:4px">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    Reveal the Truth
                 </button>
             </form>
 
             <div class="loading" id="conspiracy-loading">
-    <div class="spinner"></div>
-    <span>Analyzing Sir's mood based on your marks...</span>
-</div>
-            <div class="sad-face-container" id="sad-face">
-                <div class="sad-face">
-                    <svg viewBox="0 0 120 120" fill="none">
-                        <circle cx="60" cy="60" r="56" stroke="#ff3b30" stroke-width="2" opacity="0.3"/>
-                        <circle cx="60" cy="60" r="56" stroke="#ff3b30" stroke-width="2" stroke-dasharray="4 4" opacity="0.5">
-                            <animateTransform attributeName="transform" type="rotate" from="0 60 60" to="360 60 60" dur="20s" repeatCount="indefinite"/>
-                        </circle>
-                        <circle cx="40" cy="48" r="6" fill="#ff3b30"/>
-                        <circle cx="80" cy="48" r="6" fill="#ff3b30"/>
-                        <path d="M 38 78 Q 60 65 82 78" stroke="#ff3b30" stroke-width="3" stroke-linecap="round" fill="none">
-                            <animate attributeName="d" values="M 38 78 Q 60 65 82 78;M 38 80 Q 60 70 82 80;M 38 78 Q 60 65 82 78" dur="3s" repeatCount="indefinite"/>
-                        </path>
-                        <text x="60" y="105" text-anchor="middle" fill="#86868b" font-size="10" font-family="Inter">F</text>
-                    </svg>
-                </div>
-                <div class="sad-text">Ab to bas conspiracy theories hi sahara hain</div>
-                <div class="sad-subtext">Marks nahi, memes badhenge</div>
+                <div class="spinner"></div>
+                <span>Analysing Sir's mood on the day of marking...</span>
             </div>
 
-            <div class="result-container" id="conspiracy-result">
-                <div class="result-header">
-                    <div>
-                        <span class="result-badge" id="result-badge"></span>
-                    </div>
+            <div class="sad-container" id="sad-face">
+                <div class="sad-ring">
+                    <svg viewBox="0 0 100 100" fill="none">
+                        <circle cx="50" cy="50" r="46" stroke="rgba(255,143,0,0.25)" stroke-width="1.5"/>
+                        <circle cx="50" cy="50" r="46" stroke="rgba(255,143,0,0.45)" stroke-width="1.5" stroke-dasharray="4 4">
+                            <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="22s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="34" cy="40" r="5" fill="#ff8f00"/>
+                        <circle cx="66" cy="40" r="5" fill="#ff8f00"/>
+                        <path d="M 30 68 Q 50 55 70 68" stroke="#ff8f00" stroke-width="2.5" stroke-linecap="round" fill="none">
+                            <animate attributeName="d" values="M 30 68 Q 50 55 70 68;M 30 70 Q 50 60 70 70;M 30 68 Q 50 55 70 68" dur="3.5s" repeatCount="indefinite"/>
+                        </path>
+                    </svg>
+                </div>
+                <div class="sad-title">Ab toh bas conspiracy theories hi sahara hain</div>
+                <div class="sad-hint">Marks nahi, memes badhenge</div>
+            </div>
+
+            <div class="result-box" id="conspiracy-result">
+                <div class="result-meta">
+                    <span class="status-pill" id="result-badge"></span>
                 </div>
                 <div class="result-content" id="conspiracy-content"></div>
-                
-                <div class="action-bar">
+                <div class="action-row">
                     <button class="btn btn-secondary" onclick="copyConspiracy()">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                        Copy Result
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copy
                     </button>
                     <button class="btn btn-secondary" onclick="shareWhatsApp()">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                        Share on WhatsApp
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                        WhatsApp
                     </button>
                     <button class="btn btn-secondary" onclick="generateShareUrl()">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                         Share URL
                     </button>
                 </div>
@@ -672,23 +732,24 @@
             </div>
         </div>
 
-        <!-- Appeal Letter Section -->
+        <!-- ── APPEAL LETTER ── -->
         <div class="card" id="appeal-section">
+            <div class="section-tag">Step 2</div>
             <h2 class="card-title">Appeal Letter Generator</h2>
-            <p class="card-desc">Generate a professionally desperate email to request mark review.</p>
+            <p class="card-desc">Generate a formally desperate appeal email complete with Punjab University escalation contacts — because why not try everything.</p>
 
             <div class="appeal-tease" id="appeal-tease">
-                <div class="appeal-tease-text">
-                    Sir <span class="highlight">Atif Sultan</span> ko appeal letter bhejna hai? <br>
-                    Realistic baat ye hai ke marks badhne ke chances utne hain jitne differential paper mein pass hone ke the... <br>
-                    Lekin <span class="highlight">try karne mein kuch nahi jaata</span>. Kya kehte ho?
-                </div>
+                <p>
+                    Sir <span class="hl">Atif Sultan</span> ko appeal letter bhejna hai?<br>
+                    Honest baat ye hai ke marks badhne ke chances utne hain jitne DE mein pass hone ke thay...<br>
+                    Lekin <span class="hl">try karne mein kuch nahi jaata</span>. Kya kehte ho?
+                </p>
                 <button class="btn btn-primary" onclick="showAppealForm()">
-                    Haan bhai, generate karo
+                    Haan bhai, generate karo — kuch toh karo
                 </button>
             </div>
 
-            <form id="appeal-form" style="display: none;">
+            <form id="appeal-form" style="display:none">
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Your Name</label>
@@ -699,7 +760,6 @@
                         <input type="text" class="form-input" id="appeal-roll" placeholder="e.g. 1123BE" required>
                     </div>
                 </div>
-
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Subject</label>
@@ -707,22 +767,21 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Marks Obtained</label>
-                        <input type="number" class="form-input" id="appeal-obtained" placeholder="0-100" min="0" max="100" required>
+                        <input type="number" class="form-input" id="appeal-obtained" placeholder="0 – 100" min="0" max="100" required>
                     </div>
                 </div>
-                
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Marks Expected</label>
                         <input type="number" class="form-input" id="appeal-expected" placeholder="What you deserved" min="0" max="100" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Reason You Deserve More</label>
-                        <input type="text" class="form-input" id="appeal-reason" placeholder="e.g. I studied for 48 hours straight" required>
+                        <label class="form-label">Your Reason</label>
+                        <input type="text" class="form-input" id="appeal-reason" placeholder="e.g. I studied for 52 hours straight" required>
                     </div>
                 </div>
-
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary" style="width:100%;margin-top:4px">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                     Generate Appeal Letter
                 </button>
             </form>
@@ -732,30 +791,62 @@
                 <span>Crafting the perfect sob story...</span>
             </div>
 
-            <div class="result-container" id="appeal-result">
-                <div class="student-info-display" id="student-info-display"></div>
-                
-                <div class="email-box">
-                    <div class="email-header">Generated Email</div>
+            <div class="result-box" id="appeal-result">
+                <div class="student-panel" id="student-info-display"></div>
+                <div class="email-shell">
+                    <div class="email-chrome">
+                        <div class="email-chrome-dot"></div>
+                        <span>Generated Appeal Letter — University of the Punjab / CHEP</span>
+                    </div>
                     <div class="email-body" id="appeal-content"></div>
                 </div>
-                
-                <div class="action-bar">
+                <div class="action-row">
                     <button class="btn btn-secondary" onclick="copyAppeal()">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                        Copy Text
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copy Letter
                     </button>
                     <button class="btn btn-primary" onclick="sendEmail()">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                        Send via Email
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        Open in Email
                     </button>
                 </div>
             </div>
         </div>
 
+        <!-- ── COMPLAINT ESCALATION ── -->
+        <div class="card">
+            <div class="section-tag">Nuclear Option</div>
+            <h2 class="card-title">Complaint Escalation Contacts</h2>
+            <p class="card-desc">When the appeal letter fails (it will), these are the official University of the Punjab channels you can formally escalate to. Godspeed.</p>
+
+            <div class="contacts-grid">
+                <div class="contact-card">
+                    <div class="contact-role">Vice Chancellor</div>
+                    <div class="contact-name">University of the Punjab</div>
+                    <a href="mailto:vc@pu.edu.pk" class="contact-email">vc@pu.edu.pk</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-role">Controller of Examinations</div>
+                    <div class="contact-name">Examination Branch</div>
+                    <a href="mailto:controller@pu.edu.pk" class="contact-email">controller@pu.edu.pk</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-role">Chairman, CHEP</div>
+                    <div class="contact-name">Centre for High Energy Physics</div>
+                    <a href="mailto:chep@pu.edu.pk" class="contact-email">chep@pu.edu.pk</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-role">Director IT Services</div>
+                    <div class="contact-name">IT Department</div>
+                    <a href="mailto:itservices@pu.edu.pk" class="contact-email">itservices@pu.edu.pk</a>
+                </div>
+            </div>
+        </div>
+
         <footer class="footer">
-            <p>Sir Kamood - Marks Investigation Bureau</p>
-            <p style="margin-top: 8px; font-size: 12px;">Built for students who know the truth. Deployed with trauma.</p>
+            <p>Sir Kamood — Marks Investigation Bureau</p>
+            <p style="margin-top:6px">Built for CHEP students. Deployed with trauma. Zero peer review.</p>
+            <p style="margin-top:12px; font-size:11px; color:var(--text-3)">Disclaimer: Pure comedy. No disrespect to any professor, department, or institution. Sab moh maya hai.</p>
         </footer>
     </div>
 
@@ -763,319 +854,262 @@
 
     <script>
         let currentConspiracy = '';
-        let currentAppeal = '';
-        let currentSubject = '';
-        let currentObtained = 0;
-        let currentExpected = 0;
-        let currentStudentName = '';
-        let currentRollNo = '';
+        let currentAppeal     = '';
+        let currentSubject    = '';
+        let currentObtained   = 0;
+        let currentExpected   = 0;
+        let currentStudentName= '';
+        let currentRollNo     = '';
 
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
+        /* ── Toast ── */
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2800);
         }
 
-        function typeWriter(element, text, speed = 15) {
-            element.innerHTML = '';
+        /* ── Typewriter ── */
+        function typeWriter(el, text, speed = 11) {
+            el.innerHTML = '';
             let i = 0;
-            const cursor = document.createElement('span');
-            cursor.className = 'typewriter-cursor';
-            
-            function type() {
+            const cur = document.createElement('span');
+            cur.className = 'cursor-blink';
+
+            function step() {
                 if (i < text.length) {
-                    const char = text.charAt(i);
-                    if (char === '\n') {
-                        element.appendChild(document.createElement('br'));
+                    const ch = text[i];
+                    if (ch === '\n') {
+                        el.appendChild(document.createElement('br'));
+                    } else if (text.substr(i, 2) === '**') {
+                        // Bold: find closing **
+                        const end = text.indexOf('**', i + 2);
+                        if (end !== -1) {
+                            const strong = document.createElement('strong');
+                            strong.textContent = text.substring(i + 2, end);
+                            el.appendChild(strong);
+                            i = end + 2;
+                            el.appendChild(cur);
+                            setTimeout(step, speed * 0.5);
+                            return;
+                        }
                     } else {
-                        element.appendChild(document.createTextNode(char));
+                        el.appendChild(document.createTextNode(ch));
                     }
                     i++;
-                    element.appendChild(cursor);
-                    setTimeout(type, speed);
+                    el.appendChild(cur);
+                    setTimeout(step, speed);
                 } else {
-                    cursor.remove();
+                    cur.remove();
                 }
             }
-            type();
+            step();
         }
 
+        /* ── Confetti ── */
         function launchConfetti() {
-            const canvas = document.getElementById('confetti-canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            
-            const particles = [];
-            const colors = ['#ff3b30', '#ff6b6b', '#ff9500', '#ffcc00', '#30d158', '#64d2ff', '#bf5af2'];
-            
-            for (let i = 0; i < 150; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height - canvas.height,
-                    vx: (Math.random() - 0.5) * 4,
-                    vy: Math.random() * 3 + 2,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    size: Math.random() * 6 + 2,
-                    rotation: Math.random() * 360,
-                    rotationSpeed: (Math.random() - 0.5) * 10
+            const cv = document.getElementById('confetti');
+            const cx = cv.getContext('2d');
+            cv.width = innerWidth; cv.height = innerHeight;
+            const colors = ['#ffd54f','#ffb300','#4dd0e1','#69f0ae','#ff8f00','#e040fb'];
+            const ps = Array.from({length: 130}, () => ({
+                x: Math.random() * cv.width,
+                y: Math.random() * cv.height - cv.height,
+                vx: (Math.random() - 0.5) * 3.5,
+                vy: Math.random() * 3 + 1.5,
+                c: colors[Math.floor(Math.random() * colors.length)],
+                s: Math.random() * 6 + 2,
+                r: Math.random() * 360,
+                rs: (Math.random() - 0.5) * 8
+            }));
+            let f = 0;
+            (function draw() {
+                cx.clearRect(0, 0, cv.width, cv.height);
+                ps.forEach(p => {
+                    p.x += p.vx; p.y += p.vy; p.r += p.rs; p.vy += 0.04;
+                    cx.save(); cx.translate(p.x, p.y); cx.rotate(p.r * Math.PI / 180);
+                    cx.fillStyle = p.c; cx.fillRect(-p.s/2, -p.s/2, p.s, p.s);
+                    cx.restore();
+                    if (p.y > cv.height + 10) { p.y = -10; p.x = Math.random() * cv.width; }
                 });
-            }
-            
-            let frameCount = 0;
-            
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                frameCount++;
-                
-                particles.forEach((p) => {
-                    p.x += p.vx;
-                    p.y += p.vy;
-                    p.rotation += p.rotationSpeed;
-                    p.vy += 0.05;
-                    
-                    ctx.save();
-                    ctx.translate(p.x, p.y);
-                    ctx.rotate(p.rotation * Math.PI / 180);
-                    ctx.fillStyle = p.color;
-                    ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
-                    ctx.restore();
-                    
-                    if (p.y > canvas.height + 10) {
-                        p.y = -10;
-                        p.x = Math.random() * canvas.width;
-                    }
-                });
-                
-                if (frameCount < 300) {
-                    requestAnimationFrame(animate);
-                } else {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                }
-            }
-            
-            animate();
+                if (++f < 280) requestAnimationFrame(draw);
+                else cx.clearRect(0, 0, cv.width, cv.height);
+            })();
         }
 
-        // Conspiracy Form
+        /* ── Conspiracy Form ── */
         document.getElementById('conspiracy-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            const subject = document.getElementById('subject').value;
+            const subject  = document.getElementById('subject').value;
             const obtained = parseInt(document.getElementById('marks-obtained').value);
             const expected = parseInt(document.getElementById('marks-expected').value);
-            
-            currentSubject = subject;
-            currentObtained = obtained;
-            currentExpected = expected;
-            
+            const lookup   = document.getElementById('student-lookup').value.trim();
+
+            currentSubject = subject; currentObtained = obtained; currentExpected = expected;
+
             document.getElementById('conspiracy-result').classList.remove('active');
             document.getElementById('sad-face').classList.remove('active');
             document.getElementById('conspiracy-loading').classList.add('active');
-            
+
             try {
-                const response = await fetch('/api/conspiracy', {
+                // Figure out if lookup looks like roll number or name
+                const isRoll = /\d/.test(lookup);
+                const body = {
+                    subject,
+                    marks_obtained: obtained,
+                    marks_expected: expected,
+                    roll_no: isRoll ? lookup : '',
+                    name:    isRoll ? '' : lookup,
+                };
+
+                const res  = await fetch('/api/conspiracy', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({subject, marks_obtained: obtained, marks_expected: expected})
+                    body: JSON.stringify(body)
                 });
-                
-                const data = await response.json();
+                const data = await res.json();
                 currentConspiracy = data.result;
-                
+
                 document.getElementById('conspiracy-loading').classList.remove('active');
-                
+
                 const badge = document.getElementById('result-badge');
                 if (obtained >= 50) {
-                    badge.className = 'result-badge badge-pass';
-                    badge.textContent = 'Pass (Shukar hai)';
+                    badge.className = 'status-pill pill-pass';
+                    badge.textContent = '✓ Pass — Shukar hai';
                     launchConfetti();
                 } else {
-                    badge.className = 'result-badge badge-fail';
-                    badge.textContent = 'Fail (RIP GPA)';
+                    badge.className = 'status-pill pill-fail';
+                    badge.textContent = '✗ Fail — RIP GPA';
                     document.getElementById('sad-face').classList.add('active');
                 }
-                
+
                 document.getElementById('conspiracy-result').classList.add('active');
-                const contentDiv = document.getElementById('conspiracy-content');
-                typeWriter(contentDiv, data.result, 12);
-                
-            } catch (error) {
+                typeWriter(document.getElementById('conspiracy-content'), data.result, 11);
+
+            } catch (err) {
                 document.getElementById('conspiracy-loading').classList.remove('active');
-                showToast('Error: ' + error.message);
+                showToast('Error: ' + err.message);
             }
         });
 
-        // Appeal Form Toggle
+        /* ── Appeal ── */
         function showAppealForm() {
             document.getElementById('appeal-tease').style.display = 'none';
-            document.getElementById('appeal-form').style.display = 'block';
-            
+            document.getElementById('appeal-form').style.display  = 'block';
             if (currentSubject) {
-                document.getElementById('appeal-subject').value = currentSubject;
+                document.getElementById('appeal-subject').value  = currentSubject;
                 document.getElementById('appeal-obtained').value = currentObtained;
                 document.getElementById('appeal-expected').value = currentExpected;
             }
         }
 
-        // Appeal Form Submit
         document.getElementById('appeal-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
             const studentName = document.getElementById('appeal-name').value;
-            const rollNo = document.getElementById('appeal-roll').value;
-            const subject = document.getElementById('appeal-subject').value;
-            const obtained = parseInt(document.getElementById('appeal-obtained').value);
-            const expected = parseInt(document.getElementById('appeal-expected').value);
-            const reason = document.getElementById('appeal-reason').value;
-            
-            currentStudentName = studentName;
-            currentRollNo = rollNo;
-            
+            const rollNo      = document.getElementById('appeal-roll').value;
+            const subject     = document.getElementById('appeal-subject').value;
+            const obtained    = parseInt(document.getElementById('appeal-obtained').value);
+            const expected    = parseInt(document.getElementById('appeal-expected').value);
+            const reason      = document.getElementById('appeal-reason').value;
+
+            currentStudentName = studentName; currentRollNo = rollNo;
+
             document.getElementById('appeal-result').classList.remove('active');
             document.getElementById('appeal-loading').classList.add('active');
-            
+
             try {
-                const response = await fetch('/api/appeal', {
+                const res  = await fetch('/api/appeal', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        subject, 
-                        marks_obtained: obtained, 
-                        marks_expected: expected, 
-                        reason,
-                        student_name: studentName,
-                        roll_no: rollNo
-                    })
+                    body: JSON.stringify({ subject, marks_obtained: obtained, marks_expected: expected, reason, student_name: studentName, roll_no: rollNo })
                 });
-                
-                const data = await response.json();
+                const data = await res.json();
                 currentAppeal = data.result;
-                
+
                 document.getElementById('appeal-loading').classList.remove('active');
                 document.getElementById('appeal-result').classList.add('active');
-                
-                // Display student info
+
                 const infoDiv = document.getElementById('student-info-display');
                 infoDiv.innerHTML = `
-                    <div class="info-row">
-                        <span class="info-label">Name</span>
-                        <span class="info-value">${data.student_name || studentName}</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Roll Number</span>
-                        <span class="info-value">${data.roll_no || rollNo}</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Department</span>
-                        <span class="department-badge">CHEP</span>
-                    </div>
+                    <div class="row"><span class="s-label">Name</span><span class="s-value">${data.student_name || studentName}</span></div>
+                    <div class="row"><span class="s-label">Roll Number</span><span class="s-value">${data.roll_no || rollNo}</span></div>
+                    <div class="row"><span class="s-label">Department</span><span class="dept-chip">CHEP · UoP</span></div>
                 `;
-                
+
                 const contentDiv = document.getElementById('appeal-content');
                 let formatted = data.result;
                 if (formatted.includes('Subject:')) {
-                    const parts = formatted.split(/(Subject:.*?\n)/);
-                    if (parts.length > 1) {
-                        formatted = parts[0] + '<div class="subject-line">' + parts[1].replace('Subject:', 'Subject:') + '</div>' + parts.slice(2).join('');
-                    }
+                    formatted = formatted.replace(/(Subject:.*?\n)/, (m) =>
+                        `<div class="subj-line">${m.trim()}</div>\n`
+                    );
                 }
                 contentDiv.innerHTML = formatted.replace(/\n/g, '<br>');
-                
-            } catch (error) {
+
+            } catch (err) {
                 document.getElementById('appeal-loading').classList.remove('active');
-                showToast('Error: ' + error.message);
+                showToast('Error: ' + err.message);
             }
         });
 
+        /* ── Actions ── */
         function copyConspiracy() {
-            navigator.clipboard.writeText(currentConspiracy).then(() => {
-                showToast('Conspiracy theories copied to clipboard');
-            });
+            navigator.clipboard.writeText(currentConspiracy).then(() => showToast('Conspiracy theories copied!'));
         }
 
         function shareWhatsApp() {
-            const text = `Sir Kamood - Conspiracy Report\n\nSubject: ${currentSubject}\nMarks: ${currentObtained}/${currentExpected}\n\n${currentConspiracy}\n\nGenerated via sir-kamood.vercel.app`;
-            const url = 'https://wa.me/?text=' + encodeURIComponent(text);
-            window.open(url, '_blank');
+            const text = `Sir Kamood — Marks Investigation Bureau\n\nSubject: ${currentSubject}\nMarks: ${currentObtained} obtained | ${currentExpected} expected\n\n${currentConspiracy}`;
+            window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
         }
 
         function generateShareUrl() {
-            const data = {
-                type: 'conspiracy',
-                subject: currentSubject,
-                obtained: currentObtained,
-                expected: currentExpected,
+            const payload = btoa(unescape(encodeURIComponent(JSON.stringify({
+                type: 'conspiracy', subject: currentSubject,
+                obtained: currentObtained, expected: currentExpected,
                 content: currentConspiracy
-            };
-            const json = JSON.stringify(data);
-            const base64 = btoa(unescape(encodeURIComponent(json)));
-            const url = `${window.location.origin}${window.location.pathname}#share=${base64}`;
-            
+            }))));
+            const url = `${location.origin}${location.pathname}#share=${payload}`;
             navigator.clipboard.writeText(url).then(() => {
-                const box = document.getElementById('share-url-box');
-                box.textContent = 'URL copied to clipboard: ' + url;
-                box.classList.add('active');
-                showToast('Shareable URL copied!');
+                document.getElementById('share-url-box').textContent = url;
+                document.getElementById('share-url-box').classList.add('active');
+                showToast('URL copied!');
             });
         }
 
         function copyAppeal() {
-            navigator.clipboard.writeText(currentAppeal).then(() => {
-                showToast('Appeal letter copied to clipboard');
-            });
+            navigator.clipboard.writeText(currentAppeal).then(() => showToast('Appeal letter copied!'));
         }
 
         function sendEmail() {
-            let subject = 'Request for Mark Review';
             const match = currentAppeal.match(/Subject:\s*(.+)/);
-            if (match) subject = match[1].trim();
-            
-            const body = encodeURIComponent(currentAppeal);
-            const mailto = `mailto:professor@university.edu?subject=${encodeURIComponent(subject)}&body=${body}`;
-            window.open(mailto, '_blank');
+            const subj  = match ? match[1].trim() : 'Request for Mark Review';
+            window.open(`mailto:?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(currentAppeal)}`, '_blank');
         }
 
+        /* ── Share URL loading ── */
         function loadFromUrl() {
-            const hash = window.location.hash;
-            if (hash.startsWith('#share=')) {
-                try {
-                    const base64 = hash.replace('#share=', '');
-                    const json = decodeURIComponent(escape(atob(base64)));
-                    const data = JSON.parse(json);
-                    
-                    if (data.type === 'conspiracy') {
-                        currentSubject = data.subject;
-                        currentObtained = data.obtained;
-                        currentExpected = data.expected;
-                        currentConspiracy = data.content;
-                        
-                        document.getElementById('subject').value = data.subject;
-                        document.getElementById('marks-obtained').value = data.obtained;
-                        document.getElementById('marks-expected').value = data.expected;
-                        
-                        const badge = document.getElementById('result-badge');
-                        if (data.obtained >= 50) {
-                            badge.className = 'result-badge badge-pass';
-                            badge.textContent = 'Pass (Shukar hai)';
-                        } else {
-                            badge.className = 'result-badge badge-fail';
-                            badge.textContent = 'Fail (RIP GPA)';
-                            document.getElementById('sad-face').classList.add('active');
-                        }
-                        
-                        document.getElementById('conspiracy-result').classList.add('active');
-                        document.getElementById('conspiracy-content').innerHTML = data.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
-                    }
-                } catch (e) {
-                    console.error('Failed to load shared data');
+            const hash = location.hash;
+            if (!hash.startsWith('#share=')) return;
+            try {
+                const data = JSON.parse(decodeURIComponent(escape(atob(hash.replace('#share=','')))));
+                if (data.type === 'conspiracy') {
+                    currentSubject = data.subject; currentObtained = data.obtained;
+                    currentExpected = data.expected; currentConspiracy = data.content;
+                    document.getElementById('subject').value          = data.subject;
+                    document.getElementById('marks-obtained').value   = data.obtained;
+                    document.getElementById('marks-expected').value   = data.expected;
+
+                    const badge = document.getElementById('result-badge');
+                    if (data.obtained >= 50) { badge.className = 'status-pill pill-pass'; badge.textContent = '✓ Pass — Shukar hai'; }
+                    else { badge.className = 'status-pill pill-fail'; badge.textContent = '✗ Fail — RIP GPA'; document.getElementById('sad-face').classList.add('active'); }
+
+                    document.getElementById('conspiracy-result').classList.add('active');
+                    document.getElementById('conspiracy-content').innerHTML = data.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g,'<br>');
                 }
-            }
+            } catch {}
         }
 
-        window.addEventListener('load', loadFromUrl);
-        window.addEventListener('hashchange', loadFromUrl);
+        addEventListener('load', loadFromUrl);
+        addEventListener('hashchange', loadFromUrl);
     </script>
 </body>
 </html>
