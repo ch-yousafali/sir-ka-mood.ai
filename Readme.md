@@ -9,7 +9,7 @@ readme_content = """# Sir Kamood - Sir Ne Marks Kaise Diye?
 
 Sir Kamood is a dark-themed web app where students enter their exam marks and get **one AI-generated conspiracy theory** about why their professor gave them those marks. Funny, personal, and Urdu-English mixed (Roman Urdu). It also generates formal appeal letters with the student's name, roll number, and department (CHEP).
 
-Built with Flask + OpenRouter AI. Apple-inspired clean UI. Zero emojis.
+Built with Flask + OpenRouter AI. Apple-inspired clean UI.
 
 ---
 
