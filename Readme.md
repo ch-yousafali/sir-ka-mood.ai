@@ -167,7 +167,7 @@ User enters marks ──→ Frontend POST /api/conspiracy ──→ Flask backen
 | **Random seed per request** | OpenRouter generates different text every time |
 | **Mock fallback chain** | App never breaks, works offline, zero downtime |
 | **Disclaimer on every response** | Legal/social safety, sets fun tone |
-| **No emojis** | Clean Apple aesthetic, professional look |
+
 
 ---
 
@@ -289,9 +289,4 @@ The model is trained via system prompt — no pre-written templates in the final
 ## License
 
 MIT — use it, roast your professors, deploy with trauma.
-"""
 
-with open('/mnt/agents/output/README.md', 'w') as f:
-    f.write(readme_content)
-
-print("README.md updated with Architecture section!")
